@@ -1,5 +1,6 @@
 package com.grupo.ras.tarifa.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.grupo.ras.tarifa.enums.CategoriaConsumidor;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -16,12 +17,14 @@ import java.util.List;
 public class CategoriaTarifaria {
 
     @Id
+    @JsonIgnore
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long categoriaTarifariaId;
 
     @Enumerated(EnumType.STRING)
     private CategoriaConsumidor categoriaConsumidor;
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "tabela_tarifaria_id")
     private TabelaTarifaria tabelaTarifaria;

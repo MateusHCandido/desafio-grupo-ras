@@ -1,6 +1,6 @@
 package com.grupo.ras.tarifa.service.validation;
 
-import com.grupo.ras.tarifa.controller.dto.FaixaConsumoRequest;
+import com.grupo.ras.tarifa.controller.dto.tabela.FaixaConsumoRequest;
 import com.grupo.ras.tarifa.repository.provider.FaixaConsumoRepositoryProvider;
 import com.grupo.ras.tarifa.service.exceptions.SobreposicaoException;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +19,7 @@ public class CoberturaCompletaProvider implements FaixaConsumoValidation {
 
     @Override
     public void validar(Long categoriaId, FaixaConsumoRequest request) {
+        log.info("Validando COBERTURA COMPLETA");
         if (categoriaId == null) throw new NullPointerException("CategoriaId está nulo dentro do CoberturaCompletaProvider");
 
         boolean existeSobreposicao =

@@ -1,6 +1,7 @@
 package com.grupo.ras.tarifa.controller;
 
-import com.grupo.ras.tarifa.controller.dto.TabelaTarifariaCreateRequest;
+import com.grupo.ras.tarifa.controller.dto.tabela.TabelaTarifariaCreateRequest;
+import com.grupo.ras.tarifa.entity.TabelaTarifaria;
 import com.grupo.ras.tarifa.service.TabelaTarifariaService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -23,8 +24,12 @@ public class TabelaTarifariaController {
     }
 
     @GetMapping()
-    public ResponseEntity<List<?>> listarTabelasTarifarias(){return null;}
+    public ResponseEntity<List<TabelaTarifaria>> listarTabelasTarifarias(){
+        return ResponseEntity.ok(service.listarTabelasTarifaria());
+    }
 
-    @DeleteMapping
-    public void deletarTabelaTarifaria(@RequestParam("id") Long id){}
+    @DeleteMapping("{id}")
+    public void deletarTabelaTarifaria(@PathVariable("id") Long tabelaTarifariaId){
+        service.excluirTabelaTarifaria(tabelaTarifariaId);
+    }
 }

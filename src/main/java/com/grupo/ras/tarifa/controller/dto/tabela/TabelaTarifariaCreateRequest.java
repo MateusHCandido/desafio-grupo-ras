@@ -1,4 +1,4 @@
-package com.grupo.ras.tarifa.controller.dto;
+package com.grupo.ras.tarifa.controller.dto.tabela;
 
 
 import java.time.LocalDate;
@@ -8,5 +8,4 @@ public record TabelaTarifariaCreateRequest(
         String nome,
         LocalDate dataVigencia,
         List<CategoriaRequest> categorias
-) {
-}
+) { }

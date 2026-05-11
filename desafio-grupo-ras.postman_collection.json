@@ -1,0 +1,98 @@
+{
+  "info": {
+    "_postman_id": "dd9f4085-f5f8-47e5-bb54-bb3c015b24ac",
+    "name": "desafio-grupo-ras",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "26718913",
+    "_collection_link": "https://go.postman.co/collection/26718913-dd9f4085-f5f8-47e5-bb54-bb3c015b24ac?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "cria-tabela-tarifaria",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"nome\": \"Tabela Tarifária 2026\",\r\n  \"dataVigencia\": \"2026-05-09\",\r\n  \"categorias\": [\r\n    {\r\n      \"categoria\": \"INDUSTRIAL\",\r\n      \"faixas\": [\r\n        {\r\n          \"faixaInicio\": 0,\r\n          \"faixaFim\": 10,\r\n          \"valor\": 2.00\r\n        },\r\n        {\r\n          \"faixaInicio\": 11,\r\n          \"faixaFim\": 20,\r\n          \"valor\": 3.00\r\n        },\r\n        {\r\n          \"faixaInicio\": 21,\r\n          \"faixaFim\": 30,\r\n          \"valor\": 4.00\r\n        },\r\n        {\r\n          \"faixaInicio\": 31,\r\n          \"faixaFim\": 99999,\r\n          \"valor\": 5.00\r\n        }\r\n      ]\r\n    },\r\n    {\r\n      \"categoria\": \"COMERCIAL\",\r\n      \"faixas\": [\r\n        {\r\n          \"faixaInicio\": 0,\r\n          \"faixaFim\": 16,\r\n          \"valor\": 1.50\r\n        },\r\n        {\r\n          \"faixaInicio\": 17,\r\n          \"faixaFim\": 30,\r\n          \"valor\": 2.75\r\n        },\r\n        {\r\n          \"faixaInicio\": 31,\r\n          \"faixaFim\": 99999,\r\n          \"valor\": 4.10\r\n        }\r\n      ]\r\n    },\r\n    {\r\n      \"categoria\": \"PARTICULAR\",\r\n      \"faixas\": [\r\n        {\r\n          \"faixaInicio\": 0,\r\n          \"faixaFim\": 10,\r\n          \"valor\": 0.80\r\n        },\r\n        {\r\n          \"faixaInicio\": 11,\r\n          \"faixaFim\": 25,\r\n          \"valor\": 1.20\r\n        },\r\n        {\r\n          \"faixaInicio\": 26,\r\n          \"faixaFim\": 99999,\r\n          \"valor\": 2.50\r\n        }\r\n      ]\r\n    },\r\n    {\r\n      \"categoria\": \"PUBLICO\",\r\n      \"faixas\": [\r\n        {\r\n          \"faixaInicio\": 0,\r\n          \"faixaFim\": 20,\r\n          \"valor\": 0.60\r\n        },\r\n        {\r\n          \"faixaInicio\": 21,\r\n          \"faixaFim\": 50,\r\n          \"valor\": 1.40\r\n        },\r\n        {\r\n          \"faixaInicio\": 51,\r\n          \"faixaFim\": 99999,\r\n          \"valor\": 2.90\r\n        }\r\n      ]\r\n    }\r\n  ]\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8080/api/tabelas-tarifarias",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "tabelas-tarifarias"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "lista-tabela-tarifaria",
+      "request": {
+        "method": "GET",
+        "header": []
+      },
+      "response": []
+    },
+    {
+      "name": "deleta-tabela-tarifaria",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/api/tabelas-tarifarias/4",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "tabelas-tarifarias",
+            "4"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "calculo-detalhamento",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"categoria\": \"INDUSTRIAL\",\r\n    \"consumo\": 18\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8080/api/calculos",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "calculos"
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}

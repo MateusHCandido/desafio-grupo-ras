@@ -1,6 +1,7 @@
 package com.grupo.ras.tarifa.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -14,14 +15,17 @@ import java.math.BigDecimal;
 public class FaixaConsumo {
 
     @Id
+    @JsonIgnore
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long faixaId;
+    @JsonIgnore
     private String faixaDescricao;
     private Integer faixaInicial;
     private Integer faixaFinal;
     private BigDecimal faixaValorUnitario;
 
-    @ManyToOne
+    @JsonIgnore
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "categoria_tarifaria_id")
     private CategoriaTarifaria categoriaTarifaria;
 }

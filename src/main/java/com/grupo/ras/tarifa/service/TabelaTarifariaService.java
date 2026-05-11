@@ -1,22 +1,15 @@
 package com.grupo.ras.tarifa.service;
 
-import com.grupo.ras.tarifa.controller.dto.CategoriaRequest;
-import com.grupo.ras.tarifa.controller.dto.FaixaConsumoRequest;
-import com.grupo.ras.tarifa.controller.dto.FaixaRequest;
-import com.grupo.ras.tarifa.controller.dto.TabelaTarifariaCreateRequest;
+import com.grupo.ras.tarifa.controller.dto.tabela.CategoriaRequest;
+import com.grupo.ras.tarifa.controller.dto.tabela.FaixaRequest;
+import com.grupo.ras.tarifa.controller.dto.tabela.TabelaTarifariaCreateRequest;
 import com.grupo.ras.tarifa.entity.CategoriaTarifaria;
 import com.grupo.ras.tarifa.entity.FaixaConsumo;
 import com.grupo.ras.tarifa.entity.TabelaTarifaria;
 import com.grupo.ras.tarifa.enums.CategoriaConsumidor;
 import com.grupo.ras.tarifa.enums.StatusTabelaTarifaria;
 import com.grupo.ras.tarifa.repository.provider.TabelaTarifariaRepositoryProvider;
-import com.grupo.ras.tarifa.service.exceptions.CoberturaNaoCompletaException;
-import com.grupo.ras.tarifa.service.exceptions.OrdemFaixasInvalidaException;
-import com.grupo.ras.tarifa.service.exceptions.SobreposicaoException;
-import com.grupo.ras.tarifa.service.validation.CoberturaCompletaProvider;
-import com.grupo.ras.tarifa.service.validation.FaixaConsumoValidation;
-import com.grupo.ras.tarifa.service.validation.NaoSobrePosicaoProvider;
-import com.grupo.ras.tarifa.service.validation.OrdemFaixaConsumoProvider;
+import com.grupo.ras.tarifa.service.exceptions.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -29,10 +22,11 @@ import java.util.List;
 @RequiredArgsConstructor
 public class TabelaTarifariaService {
 
-   private final TabelaTarifariaRepositoryProvider tabelaTarifariaRepository;
+
+    private final TabelaTarifariaRepositoryProvider tabelaTarifariaRepository;
 
 
-   public void criarTabelaTarifaria(TabelaTarifariaCreateRequest request){
+    public void criarTabelaTarifaria(TabelaTarifariaCreateRequest request){
        log.info("Criando tabela tarifaria");
        TabelaTarifaria tabelaTarifaria = new TabelaTarifaria();
 
@@ -49,10 +43,11 @@ public class TabelaTarifariaService {
 
        tabelaTarifaria.setCategorias(categorias);
 
+       tabelaTarifariaRepository.inativarTabelasAtivas();
        tabelaTarifariaRepository.save(tabelaTarifaria);
    }
 
-   private CategoriaTarifaria criarCategoria(CategoriaRequest request, TabelaTarifaria tabelaTarifaria){
+    private CategoriaTarifaria criarCategoria(CategoriaRequest request, TabelaTarifaria tabelaTarifaria){
        log.info("Criando categoria tarifária");
        validarFaixas(request.faixas());
 
@@ -72,7 +67,7 @@ public class TabelaTarifariaService {
        return categoria;
    }
 
-   private void validarFaixas(List<FaixaRequest> faixas){
+    private void validarFaixas(List<FaixaRequest> faixas){
        faixas.sort(Comparator.comparing(FaixaRequest::faixaInicio));
 
        for (int i = 0; i < faixas.size(); i++){
@@ -102,6 +97,22 @@ public class TabelaTarifariaService {
        return faixaConsumo;
    }
 
+    public List<TabelaTarifaria> listarTabelasTarifaria(){
+        log.info("Efetuando consulta de listagem de todas as tabelas tarifarias");
+        List<TabelaTarifaria> tabelas = tabelaTarifariaRepository.findAll();
 
+        if (tabelas.isEmpty()) throw new SemRegistroTabelaException();
+        return tabelas;
+    }
+
+    public void excluirTabelaTarifaria(Long tabelaTarifariaId){
+        try{
+            log.info("Efetuando exclusão da tabela tarifária de id {}", tabelaTarifariaId);
+            tabelaTarifariaRepository.deleteBy(tabelaTarifariaId);
+        }catch (Exception exception){
+            log.error("Ocorreu um erro na exclusão da tabela tarifária de id {}", tabelaTarifariaId);
+            throw new FalhaExclusaoTabelaTarifariaException(exception.getMessage());
+        }
+    }
 
 }
